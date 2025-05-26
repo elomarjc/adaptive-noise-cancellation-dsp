@@ -3,9 +3,9 @@ clear;
 close all;
 
 %% Define the path for the data
-[u, fs] = audioread("C:\Users\eloma\Desktop\new_adaptivefilter\3_Baseline_Company_Data\Data_ANC\Experiment_Data\Ambulance&Traffic\NHS\1\primary.wav");   %noise + clean signal
-[d, ~] = audioread("C:\Users\eloma\Desktop\new_adaptivefilter\3_Baseline_Company_Data\Data_ANC\Experiment_Data\Ambulance&Traffic\NHS\1\secondary.wav");
-[x, ~] = audioread("C:\Users\eloma\Desktop\new_adaptivefilter\3_Baseline_Company_Data\Data_ANC\Experiment_Data\Ambulance&Traffic\NHS\1\ZCH0029.wav");
+[u, fs] = audioread("C:\Users\eloma\Desktop\new_adaptivefilter\3_Baseline_Company_Data\Data_ANC\Experiment_Data\Hospital Ambient Noises\NLS\1\primary.wav");   %noise + clean signal
+[d, ~] = audioread("C:\Users\eloma\Desktop\new_adaptivefilter\3_Baseline_Company_Data\Data_ANC\Experiment_Data\Hospital Ambient Noises\NLS\1\secondary.wav");
+[x, ~] = audioread("C:\Users\eloma\Desktop\new_adaptivefilter\3_Baseline_Company_Data\Data_ANC\Experiment_Data\Hospital Ambient Noises\NLS\1\steth_20190608_11_58_04_ok.wav");
 
 % [u, fs] = audioread("C:\Users\eloma\Desktop\new_adaptivefilter\4_Baseline_My_Own_Experiment\NHS New Data - AdaptiveFilter\Speech\Primary.wav");   %noise + clean signal
 % [d, ~] = audioread("C:\Users\eloma\Desktop\new_adaptivefilter\4_Baseline_My_Own_Experiment\NHS New Data - AdaptiveFilter\Speech\Secondary.wav");
@@ -19,7 +19,7 @@ close all;
  % x = x*3;
 
 % Name of audio type to have in figures and folder name
-suffix = 'Ambulance&Traffic - fixed param';
+suffix = 'Hospital Ambient Noises - NLS 1 - fixed param';
 
 % %% Define start time for trimming (1.5 seconds)
 % start_time = 13;  % in seconds
@@ -31,27 +31,27 @@ suffix = 'Ambulance&Traffic - fixed param';
 % x = x(start_sample:end);
 
 %% Define the duration of the segment to extract (x seconds)
-segment_duration = 6;  % in seconds
-segment_samples = segment_duration * fs;  % Convert duration to sample count
-
-% Ensure that the recordings are long enough and extract the first x seconds from each
-if length(u) >= segment_samples
-    u = u(1:segment_samples);  % Extract first x seconds
-else
-    error('Primary signal is shorter than x seconds.');
-end
-
-if length(d) >= segment_samples
-    d = d(1:segment_samples);  % Extract first x seconds
-else
-    error('Secondary signal is shorter than 6 seconds.');
-end
-
-if length(x) >= segment_samples
-    x = x(1:segment_samples);  % Extract first x seconds
-else
-    error('Clean signal is shorter than x seconds.');
-end
+% segment_duration = 6;  % in seconds
+% segment_samples = segment_duration * fs;  % Convert duration to sample count
+% 
+% % Ensure that the recordings are long enough and extract the first x seconds from each
+% if length(u) >= segment_samples
+%     u = u(1:segment_samples);  % Extract first x seconds
+% else
+%     error('Primary signal is shorter than x seconds.');
+% end
+% 
+% if length(d) >= segment_samples
+%     d = d(1:segment_samples);  % Extract first x seconds
+% else
+%     error('Secondary signal is shorter than 6 seconds.');
+% end
+% 
+% if length(x) >= segment_samples
+%     x = x(1:segment_samples);  % Extract first x seconds
+% else
+%     error('Clean signal is shorter than x seconds.');
+% end
 
 % Ensure all signals are the same size by trimming to the smallest length
 min_len = min([length(u), length(d), length(x)]);
@@ -467,6 +467,7 @@ s_filtered_RLS_db = 10 * log10(s_filtered_RLS + eps);
 cmin = -60;
 cmax = max([max(s_x_db(:)), max(s_u_db(:)), max(s_filtered_LMS_db(:)), max(s_filtered_NLMS_db(:)), max(s_filtered_RLS_db(:))]);
 ymax = 2000;
+xmax = 14;
 
 % Plot Mel spectrograms in a single figure (5 subplots)
 figure;
@@ -482,7 +483,7 @@ colorbar;
 colormap jet;
 caxis([cmin cmax]); % Set color axis
 ylim([0 ymax]);
-xlim([0 5]); % 5 for heart, 10 for lung
+xlim([0 xmax]); % 5 for heart, 10 for lung
 
 % Primary signal (heart+noise)
 subplot(5,1,2);
@@ -495,7 +496,7 @@ colorbar;
 colormap jet;
 caxis([cmin cmax]); % Set color axis
 ylim([0 ymax]);
-xlim([0 5]);
+xlim([0 xmax]);
 
 % Filtered LMS signal
 subplot(5,1,3); 
@@ -508,7 +509,7 @@ colorbar;
 colormap jet;
 caxis([cmin cmax]); % Set color axis
 ylim([0 ymax]);
-xlim([0 5]);
+xlim([0 xmax]);
 
 % Filtered NLMS signal
 subplot(5,1,4);
@@ -521,7 +522,7 @@ colorbar;
 colormap jet;
 caxis([cmin cmax]); % Set color axis
 ylim([0 ymax]);
-xlim([0 5]);
+xlim([0 xmax]);
 
 % Filtered RLS signal
 subplot(5,1,5);
@@ -534,7 +535,7 @@ colorbar;
 colormap jet;
 caxis([cmin cmax]); % Set color axis
 ylim([0 ymax]);
-xlim([0 5]);
+xlim([0 xmax]);
 
 % Set figure size and position
 set(gcf, 'Units', 'inches', 'Position', [0, 0, 8.266666666666666, 9.866666666666667]);

@@ -23,7 +23,7 @@ lambda_RLS = 0.9999;  % For RLS
 
 M_LMS = 8;         % LMS filter length
 M_NLMS = 8;        % NLMS filter length
-M_RLS = 10;        % RLS filter length
+M_RLS = 8;        % RLS filter length
 
 %% Define the duration of the segment to extract (x seconds)
 segment_duration = 6;  % in seconds

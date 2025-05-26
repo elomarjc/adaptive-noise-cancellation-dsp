@@ -13,7 +13,7 @@ close all;
  x = x*3;
 
 % Name of audio type to have in figures and folder name
-suffix = 'Lung Hospital Ambient Noises';
+suffix = 'Hospital Ambient Noises - NLS 1 - fixed param';
 
 % % Define the duration of the segment to extract (6 seconds)
 % segment_duration = 11;  % in seconds
@@ -50,10 +50,15 @@ initial_SNR = 10 * log10(sum(x.^2) / sum((x - d).^2));  % The same as 10 * log10
 initial_MSE = mean((x - d).^2);
 
 %% Parameters
-mu_values_LMS = [0.0001 0.001 0.002 0.005 0.0075 0.01 0.015 0.02 0.025 0.03 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9];
-mu_values_NLMS = [0.0001 0.001 0.002 0.005 0.0075 0.01 0.015 0.02 0.025 0.03 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9];
-lambda_values = [0.92 0.95 0.97 0.98 0.985 0.99 0.995 0.998 0.9985 0.999 0.9992 0.9995 0.9997 0.9999];
-filter_length = [1 2 3 4 5 6 8 10 12 16 24 32 40 60 80 100]; 
+% mu_values_LMS = [0.0001 0.001 0.002 0.005 0.0075 0.01 0.015 0.02 0.025 0.03 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9];
+% mu_values_NLMS = [0.0001 0.001 0.002 0.005 0.0075 0.01 0.015 0.02 0.025 0.03 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9];
+% lambda_values = [0.92 0.95 0.97 0.98 0.985 0.99 0.995 0.998 0.9985 0.999 0.9992 0.9995 0.9997 0.9999];
+% filter_length = [1 2 3 4 5 6 8 10 12 16 24 32 40 60 80 100]; 
+
+mu_values_LMS = [0.3];
+mu_values_NLMS = [0.03];
+lambda_values = [0.9999];
+filter_length = [8]; 
 
 totalIterations = length(filter_length) * (length(mu_values_LMS) + length(mu_values_NLMS)) + ...
                   length(filter_length) * length(lambda_values);
