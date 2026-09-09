@@ -109,8 +109,8 @@ new_adaptivefilter/
 ### Running the SNR Comparison
 ```matlab
 % Clone repository
-git clone https://github.com/elomarjc/new_adaptivefilter.git
-cd new_adaptivefilter
+git clone https://github.com/elomarjc/adaptive-noise-cancellation-dsp.git
+cd adaptive-noise-cancellation-dsp
 
 % Generate SNR comparative figure
 run('SNR_comparison.m')
