@@ -44,21 +44,44 @@ Three classical adaptive filtering formulations were implemented, analyzed, and 
 
 ### 1. Least Mean Squares (LMS)
 Stochastic gradient descent minimizing instantaneous mean square error:
-$$e(n) = d(n) - \mathbf{w}^T(n)\mathbf{x}(n)$$
-$$\mathbf{w}(n+1) = \mathbf{w}(n) + 2\mu e(n)\mathbf{x}(n)$$
+
+$$
+e(n) = d(n) - \mathbf{w}^T(n)\mathbf{x}(n)
+$$
+
+$$
+\mathbf{w}(n+1) = \mathbf{w}(n) + 2\mu e(n)\mathbf{x}(n)
+$$
+
 * **Characteristics**: Low computational complexity $\mathcal{O}(L)$, stable under stationary statistics, sensitive to input signal power scaling.
 
 ### 2. Normalized Least Mean Squares (NLMS)
 Normalizes the adaptation step size by the Euclidean norm of the reference vector to prevent gradient divergence during high-energy acoustic bursts:
-$$\mathbf{w}(n+1) = \mathbf{w}(n) + \frac{\mu}{\|\mathbf{x}(n)\|^2 + \epsilon} e(n)\mathbf{x}(n)$$
+
+$$
+\mathbf{w}(n+1) = \mathbf{w}(n) + \frac{\mu}{\Vert \mathbf{x}(n) \Vert^2 + \epsilon} e(n)\mathbf{x}(n)
+$$
+
 * **Characteristics**: Resilient against non-stationary speech and environmental volume swings.
 
 ### 3. Recursive Least Squares (RLS)
 Deterministic Gauss-Newton minimization with an exponential weighting forgetting factor $\lambda$:
-$$\mathbf{k}(n) = \frac{\mathbf{P}(n-1)\mathbf{x}(n)}{\lambda + \mathbf{x}^T(n)\mathbf{P}(n-1)\mathbf{x}(n)}$$
-$$e(n) = d(n) - \mathbf{w}^T(n-1)\mathbf{x}(n)$$
-$$\mathbf{w}(n) = \mathbf{w}(n-1) + \mathbf{k}(n)e(n)$$
-$$\mathbf{P}(n) = \frac{1}{\lambda}\left[\mathbf{P}(n-1) - \mathbf{k}(n)\mathbf{x}^T(n)\mathbf{P}(n-1)\right]$$
+
+$$
+\mathbf{k}(n) = \frac{\mathbf{P}(n-1)\mathbf{x}(n)}{\lambda + \mathbf{x}^T(n)\mathbf{P}(n-1)\mathbf{x}(n)}
+$$
+
+$$
+e(n) = d(n) - \mathbf{w}^T(n-1)\mathbf{x}(n)
+$$
+
+$$
+\mathbf{w}(n) = \mathbf{w}(n-1) + \mathbf{k}(n)e(n)
+$$
+
+$$
+\mathbf{P}(n) = \frac{1}{\lambda}\left[\mathbf{P}(n-1) - \mathbf{k}(n)\mathbf{x}^T(n)\mathbf{P}(n-1)\right]
+$$
 * **Characteristics**: Extremely rapid convergence rates independent of eigenvalue spread, $\mathcal{O}(L^2)$ computational complexity.
 
 ---
